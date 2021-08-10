@@ -88,7 +88,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
 
-        rb.velocity = transform.forward * moveZ;
+        rb.velocity = transform.right * moveZ;
 
         //WSキー、↑↓キーで上下の方向を替える
         float y = Input.GetAxisRaw("Vertical") * Time.deltaTime * angleSpeed;
@@ -120,29 +120,23 @@ public class Player : MonoBehaviour
             return;
         }
 
-        float scaleCorrection1 = transform.localScale.y * 0.75f;
-        float scaleCorrection2 = transform.localScale.y;
-
         // spaceキーで前進
         if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.F) && boostSlider.value > 0)
         {
             boostSlider.value -= Time.deltaTime / 3;
             moveZ = speed * 2 * Time.deltaTime;
-            if (transform.localScale.x > scaleCorrection1) transform.localScale -= new Vector3(Time.deltaTime * dropCount, 0, 0);
             particle.SetActive(true);
         }
         else if (Input.GetKey(KeyCode.Space))
         {
             moveZ = speed * Time.deltaTime;
             boostSlider.value += Time.deltaTime / 7;
-            if (transform.localScale.x > scaleCorrection1) transform.localScale -= new Vector3(Time.deltaTime * dropCount, 0, 0);
             particle.SetActive(false);
         }
         else
         {
             moveZ = 0;
             boostSlider.value += Time.deltaTime / 7;
-            if (transform.localScale.x <= scaleCorrection2) transform.localScale += new Vector3(Time.deltaTime * dropCount, 0, 0);
             particle.SetActive(false);
         }
 
