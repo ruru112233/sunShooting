@@ -25,7 +25,7 @@ public class BulletGeneretor : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.G))
         {
-            if (Time.frameCount % 10 == 0)
+            if (Time.frameCount % 5 == 0)
             {
                 RightBullet();
                 LeftBullet();
