@@ -8,6 +8,7 @@ TagManager:
   - Meteorite
   - WaterDrop
   - TimeController
+  - Bullet
   layers:
   - Default
   - TransparentFX
