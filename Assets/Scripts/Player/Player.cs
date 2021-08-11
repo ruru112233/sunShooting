@@ -5,6 +5,12 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class Parm
+{
+    public int hp = 100;
+    public float boost = 1.0f;
+}
+
 public class Player : MonoBehaviour
 {
 
@@ -54,6 +60,8 @@ public class Player : MonoBehaviour
         sunObj = GameObject.FindWithTag("SunObj");
         rb = GetComponent<Rigidbody>();
         particle.SetActive(false);
+
+       
     }
 
     // Update is called once per frame
@@ -93,6 +101,8 @@ public class Player : MonoBehaviour
                 AudioManager.instance.StopSe();
             }
         }
+
+        GameOver();
     }
 
     private void FixedUpdate()
@@ -273,28 +283,27 @@ public class Player : MonoBehaviour
             AudioManager.instance.PlaySE(0);
         }
 
-        if (other.gameObject.tag == "Meteorite")
-        {
-            Debug.Log("ゲームオーバー");
-            GameManager.instance.gameOverPanel.SetActive(true);
-            GameOver();
-        }
+        
     }
 
     // ゲームオーバーの処理
     private async void GameOver()
     {
-        AudioManager.instance.PlaySE(3);
+        var parm = new Parm();
 
-        GameManager.instance.gameOverFlag = true;
+        if (parm.hp <= 0)
+        {
+            Debug.Log("ゲームオーバー");
+            GameManager.instance.gameOverPanel.SetActive(true);
 
-        int score = CalcScript.ScoreCalc();
+            AudioManager.instance.PlaySE(3);
+            GameManager.instance.gameOverFlag = true;
+            int score = CalcScript.ScoreCalc();
+            naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score);
 
-        naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score);
+            await Task.Delay(500);
+        }
 
-        await Task.Delay(500);
-
-        
     }
 
 }

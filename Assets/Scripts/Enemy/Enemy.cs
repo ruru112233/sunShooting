@@ -6,6 +6,9 @@ public class Enemy : MonoBehaviour
 {
     GameObject player = null;
 
+    [SerializeField]
+    private GameObject enemyBulletPool = null;
+
     Rigidbody rb;
 
     // Start is called before the first frame update
