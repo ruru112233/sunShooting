@@ -12,7 +12,7 @@ public class BulletGeneretor : MonoBehaviour
 
     Rigidbody rb;
 
-    public float speed = 100f;
+    private float speed = 100f;
 
     // Start is called before the first frame update
     void Start()

@@ -9,6 +9,7 @@ TagManager:
   - WaterDrop
   - TimeController
   - Bullet
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
