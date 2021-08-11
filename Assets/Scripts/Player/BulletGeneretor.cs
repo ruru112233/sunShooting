@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletGeneretor : MonoBehaviour
 {
     [SerializeField]
-    private GameObject bulletPool = null;
+    private GameObject playerBulletPool = null;
 
     [SerializeField]
     private ShotPosition shotPosition = null;
@@ -38,7 +38,7 @@ public class BulletGeneretor : MonoBehaviour
     {
         if (!GameManager.instance.gameOverFlag)
         {
-            foreach (Transform t in bulletPool.transform)
+            foreach (Transform t in playerBulletPool.transform)
             {
                 if (!t.gameObject.activeSelf)
                 {
@@ -51,8 +51,8 @@ public class BulletGeneretor : MonoBehaviour
                 }
             }
 
-            GameObject obj = bulletPool.transform.GetChild(0).gameObject;
-            rb = Instantiate(obj, RightPos(), Quaternion.identity, bulletPool.transform).GetComponent<Rigidbody>();
+            GameObject obj = playerBulletPool.transform.GetChild(0).gameObject;
+            rb = Instantiate(obj, RightPos(), Quaternion.identity, playerBulletPool.transform).GetComponent<Rigidbody>();
             rb.velocity = Vector3.zero;
             rb.AddForce(transform.right * speed, ForceMode.Impulse);
         }
@@ -63,7 +63,7 @@ public class BulletGeneretor : MonoBehaviour
     {
         if (!GameManager.instance.gameOverFlag)
         {
-            foreach (Transform t in bulletPool.transform)
+            foreach (Transform t in playerBulletPool.transform)
             {
                 if (!t.gameObject.activeSelf)
                 {
@@ -76,8 +76,8 @@ public class BulletGeneretor : MonoBehaviour
                 }
             }
 
-            GameObject obj = bulletPool.transform.GetChild(0).gameObject;
-            rb = Instantiate(obj, LeftPos(), Quaternion.identity, bulletPool.transform).GetComponent<Rigidbody>();
+            GameObject obj = playerBulletPool.transform.GetChild(0).gameObject;
+            rb = Instantiate(obj, LeftPos(), Quaternion.identity, playerBulletPool.transform).GetComponent<Rigidbody>();
             rb.velocity = Vector3.zero;
             rb.AddForce(transform.right * speed, ForceMode.Impulse);
         }
