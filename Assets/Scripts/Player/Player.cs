@@ -229,9 +229,10 @@ public class Player : MonoBehaviour
     // 隕石とプレイヤーの位置から、プレイヤーの近くに隕石があるか判定
     void MeteoPosCheck()
     {
-        if (FindMeteo() != null)
+        
+        if (SearchScript.FindMeteo(this.transform) != null)
         {
-            float distance = Vector3.Distance(FindMeteo().transform.position, this.transform.position);
+            float distance = Vector3.Distance(SearchScript.FindMeteo(this.transform).transform.position, this.transform.position);
 
             if (distance < 150)
             {
@@ -245,31 +246,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // 一番近い隕石を取得
-    GameObject FindMeteo()
-    {
-        GameObject[] meteos = GameObject.FindGameObjectsWithTag("Meteorite");
-        GameObject closest = null;
-
-        float distance = Mathf.Infinity;
-
-        Vector3 position = transform.position;
-
-        foreach (GameObject meteo in meteos)
-        {
-            Vector3 diff = meteo.transform.position - position;
-
-            float curDistance = diff.sqrMagnitude;
-
-            if (curDistance < distance)
-            {
-                closest = meteo;
-                distance = curDistance;
-            }
-        }
-
-        return closest;
-    }
+    
 
     private void OnTriggerEnter(Collider other)
     {

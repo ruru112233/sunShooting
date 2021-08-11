@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour
         TargetPlayr();
         EnemyMove(distance);
         Shoot(distance);
+        MeteoAvoidance();
 
     }
 
@@ -52,8 +53,6 @@ public class Enemy : MonoBehaviour
     void EnemyMove(float distance)
     {
         float speed = 1.5f;
-
-        Debug.Log(distance);
 
         if (distance >= 18f)
         {
@@ -96,6 +95,33 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
+
+    }
+
+    // Ë¶êŒÇÃâÒî
+    void MeteoAvoidance()
+    {
+        float distance = Vector3.Distance(SearchScript.FindMeteo(this.transform).transform.position, this.transform.position);
+
+        Debug.Log(distance);
+
+        //if (distance < 100.0f)
+        //{
+        //    Rigidbody avoidanceRb = GetComponent<Rigidbody>();
+
+
+        //    avoidanceRb.AddForce(transform.up * -1f, ForceMode.Force);
+        //    if (this.transform.position.y < player.transform.position.y)
+        //    {
+        //        Debug.Log("è„Ç…à⁄ìÆ");
+        //        //avoidanceRb.AddForce(transform.up * speed, ForceMode.Force);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("â∫Ç…à⁄ìÆ");
+        //        //avoidanceRb.AddForce(transform.up * -speed, ForceMode.Force);
+        //    }
+        //}
 
     }
 

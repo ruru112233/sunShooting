@@ -28,4 +28,31 @@ public static class SearchScript
 
         return closest;
     }
+
+    // àÍî‘ãﬂÇ¢Ë¶êŒÇéÊìæ
+    public static GameObject FindMeteo(Transform transform)
+    {
+        GameObject[] meteos = GameObject.FindGameObjectsWithTag("Meteorite");
+        GameObject closest = null;
+
+        float distance = Mathf.Infinity;
+
+        Vector3 position = transform.position;
+
+        foreach (GameObject meteo in meteos)
+        {
+            Vector3 diff = meteo.transform.position - position;
+
+            float curDistance = diff.sqrMagnitude;
+
+            if (curDistance < distance)
+            {
+                closest = meteo;
+                distance = curDistance;
+            }
+        }
+
+        return closest;
+    }
+
 }
