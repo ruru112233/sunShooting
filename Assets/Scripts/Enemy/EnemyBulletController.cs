@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-public class EnemyBulletController : MonoBehaviour
+public class EnemyBulletController : BulletController
 {
     // Start is called before the first frame update
     void Start()
@@ -11,9 +12,9 @@ public class EnemyBulletController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        
+        base.Update();
     }
 
     private void OnTriggerEnter(Collider other)

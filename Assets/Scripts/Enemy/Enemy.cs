@@ -9,6 +9,11 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject enemyBulletPool = null;
 
+    [SerializeField]
+    private Transform shotPos = null;
+
+    private float speed = 100f;
+
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -22,8 +27,12 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // プレイヤーとの間隔を測定
+        float distance = Vector3.Distance(player.transform.position, this.transform.position);
+
         TargetPlayr();
-        EnemyMove();
+        EnemyMove(distance);
+        Shoot(distance);
 
     }
 
@@ -40,11 +49,8 @@ public class Enemy : MonoBehaviour
 
     }
 
-    void EnemyMove()
+    void EnemyMove(float distance)
     {
-        // プレイヤーとの間隔を測定
-        float distance = Vector3.Distance(player.transform.position, this.transform.position);
-
         float speed = 1.5f;
 
         Debug.Log(distance);
@@ -57,6 +63,47 @@ public class Enemy : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
         }
+
+    }
+
+    // 攻撃
+    void Shoot(float distance)
+    {
+        if (distance < 50f)
+        {
+            if (Time.frameCount % 50 == 0)
+            {
+                if (!GameManager.instance.gameOverFlag)
+                {
+                    Rigidbody bulletRb = new Rigidbody();
+                    foreach (Transform t in enemyBulletPool.transform)
+                    {
+                        if (!t.gameObject.activeSelf)
+                        {
+                            t.SetPositionAndRotation(ShotPos(), Quaternion.identity);
+                            t.gameObject.SetActive(true);
+                            bulletRb = t.GetComponent<Rigidbody>();
+                            bulletRb.velocity = Vector3.zero;
+                            bulletRb.AddForce(transform.forward * speed, ForceMode.Impulse);
+                            return;
+                        }
+                    }
+
+                    GameObject obj = enemyBulletPool.transform.GetChild(0).gameObject;
+                    bulletRb = Instantiate(obj, ShotPos(), Quaternion.identity, enemyBulletPool.transform).GetComponent<Rigidbody>();
+                    bulletRb.velocity = Vector3.zero;
+                    bulletRb.AddForce(transform.right * speed, ForceMode.Impulse);
+                }
+            }
+        }
+
+    }
+
+    Vector3 ShotPos()
+    {
+        Vector3 pos = new Vector3(shotPos.position.x, shotPos.position.y, shotPos.transform.position.z);
+
+        return pos;
 
     }
 }

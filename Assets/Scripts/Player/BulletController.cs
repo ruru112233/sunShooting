@@ -13,7 +13,7 @@ public class BulletController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         delTime += Time.deltaTime;
 
