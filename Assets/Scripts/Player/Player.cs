@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject particle = null;
 
+    [SerializeField]
+    private GameObject spaceShuttle = null;
+
     public int DropCount
     {
         get { return dropCount; }
@@ -37,6 +40,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Slider boostSlider;
 
+    Vector3 ptForward = new Vector3(0, 0, 0);
+    Vector3 ptRight = new Vector3(-0.5f, 0, 0);
+    Vector3 ptLeft = new Vector3(0.5f, 0, 0);
+
+    float turningSpeed = 20f;
+
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -56,16 +65,17 @@ public class Player : MonoBehaviour
             StartPosition();
             if (!overHeat)
             {
-                if (Input.GetKeyDown(KeyCode.F) && Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.F) && Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.F) && Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.F) && Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Z))
                 {
                     AudioManager.instance.PlaySE(1);
                 }
-                else if (Input.GetKeyUp(KeyCode.F) || Input.GetKeyUp(KeyCode.Space))
+                else if (Input.GetKeyUp(KeyCode.F) || Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || Input.GetKeyUp(KeyCode.Z))
                 {
                     AudioManager.instance.StopSe();
                 }
 
                 Move();
+                //TurningMove();
             }
             else
             {
@@ -113,8 +123,7 @@ public class Player : MonoBehaviour
 
     // 移動
     void Move()
-    {
-
+    {   
         if (boostSlider.value <= 0)
         {
             overHeat = true;
@@ -124,30 +133,74 @@ public class Player : MonoBehaviour
         // spaceキーで前進
         if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.F) && boostSlider.value > 0)
         {
-            boostSlider.value -= Time.deltaTime / 3;
+            boostSlider.value -= Time.deltaTime / 4f;
             moveZ = speed * 2 * Time.deltaTime;
+            particle.GetComponent<ParticleSystemRenderer>().pivot = ptForward;
             particle.SetActive(true);
         }
         else if (Input.GetKey(KeyCode.Space))
         {
-            moveZ = speed * Time.deltaTime;
-            boostSlider.value += Time.deltaTime / 7;
-            particle.SetActive(false);
+            ForwardMove();
+
+            if (Input.GetKey(KeyCode.C))
+            {
+                TurningRigheMove();
+            }
+            else if (Input.GetKey(KeyCode.Z))
+            {
+                TurningLeftMove();
+            }
+        }
+        else if(Input.GetKey(KeyCode.C))
+        {
+            TurningRigheMove();
+        }
+        else if (Input.GetKey(KeyCode.Z))
+        {
+            TurningLeftMove();
         }
         else
         {
             moveZ = 0;
-            boostSlider.value += Time.deltaTime / 7;
+            boostSlider.value += Time.deltaTime / 5;
             particle.SetActive(false);
         }
+    }
 
+    // 前進
+    void ForwardMove()
+    {
+        moveZ = speed * Time.deltaTime;
+        boostSlider.value += Time.deltaTime / 5;
+        particle.GetComponent<ParticleSystemRenderer>().pivot = ptForward;
+        particle.SetActive(true);
+    }
+    
+
+    // 右旋回
+    void TurningRigheMove()
+    {
+        rb.AddForce(transform.forward * -turningSpeed, ForceMode.Impulse);
+        boostSlider.value -= Time.deltaTime / 4f;
+        particle.GetComponent<ParticleSystemRenderer>().pivot = ptRight;
+        particle.SetActive(true);
+    }
+
+    // 左旋回
+    void TurningLeftMove()
+    {
+        rb.AddForce(transform.forward * turningSpeed, ForceMode.Impulse);
+        boostSlider.value -= Time.deltaTime / 4f;
+        particle.GetComponent<ParticleSystemRenderer>().pivot = ptLeft;
+        particle.SetActive(true);
+        
     }
 
     // バーストを全て使い切ると、一時的に動けないようになる
     void OverHeart()
     {
         Debug.Log("オーバーヒート");
-        gameObject.GetComponent<Renderer>().material.color = Color.red;
+        spaceShuttle.GetComponent<Renderer>().material.color = Color.red;
         transform.localScale = new Vector3(transform.localScale.y, transform.localScale.y, transform.localScale.z);
         moveZ = 0;
         overHeartTime += Time.deltaTime;
@@ -158,7 +211,7 @@ public class Player : MonoBehaviour
             overHeat = false;
             overHeartTime = 0;
             boostSlider.value = 0.01f;
-            gameObject.GetComponent<Renderer>().material.color = Color.white;
+            spaceShuttle.GetComponent<Renderer>().material.color = Color.white;
         }
 
     }
