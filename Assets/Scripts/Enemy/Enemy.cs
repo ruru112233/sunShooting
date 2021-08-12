@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
         // ÉvÉåÉCÉÑÅ[Ç∆ÇÃä‘äuÇë™íË
         float distance = Vector3.SqrMagnitude(player.transform.position - this.transform.position);
 
-        if (EnemyHp > 0)
+        if (EnemyHp > 0 && !GameManager.instance.gameOverFlag)
         {
             TargetPlayr();
             EnemyMove(distance);
@@ -83,11 +83,11 @@ public class Enemy : MonoBehaviour
     {
         float speed = 1.5f;
 
-        if (distance >= 8500)
+        if (distance >= 10000)
         {
             transform.RotateAround(sunObj.transform.position, Vector3.up, speed * Time.deltaTime);
         }
-        else if (distance >= 4000)
+        else if (distance >= 5000)
         {
             rb.AddForce(transform.forward * speed);
 
@@ -113,7 +113,7 @@ public class Enemy : MonoBehaviour
     // çUåÇ
     void Shoot(float distance)
     {
-        if (distance < 3000f)
+        if (distance < 4000f)
         {
             if (Time.frameCount % 60 == 0)
             {

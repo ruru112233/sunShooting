@@ -50,6 +50,10 @@ public class EnemyDamage : MonoBehaviour
     {
         Debug.Log("Œ‚’Ä");
         boxCol.enabled = false;
+
+        if (enemy_01.EnemyAt == 5) player.Point += 100;
+        player.GekituiCount++;
+
         delEffect.SetActive(true);
         await Task.Delay(1500);
         ItemDrop();
