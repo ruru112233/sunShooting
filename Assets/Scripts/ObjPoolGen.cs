@@ -18,12 +18,6 @@ public class ObjPoolGen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //InvokeRepeating("SmallMeteo", 0.0f, 5.0f);
-        //InvokeRepeating("NomalMeteo", 100.0f, 12.0f);
-        //InvokeRepeating("BigMeteo", 200.0f, 22.0f);
-        //InvokeRepeating("GetRightDrop", 0.0f, 1.0f);
-        //InvokeRepeating("GetLeftDrop", 0.0f, 1.0f);
-
         for (int i = 0; i < 60; i++)
         {
             Invoke("SmallMeteo", 0f);

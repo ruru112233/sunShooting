@@ -12,6 +12,9 @@ public class BulletGeneretor : MonoBehaviour
 
     private float speed = 100f;
 
+    bool shotFlag = false;
+    float shotTime = 0;
+
     Player player = null;
 
     // Start is called before the first frame update
@@ -25,8 +28,23 @@ public class BulletGeneretor : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.G))
         {
-            if (Time.frameCount % 5 == 0)
+
+            shotTime += Time.deltaTime;
+            shotFlag = true;
+        }
+        else
+        {
+            shotFlag = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (shotFlag)
+        {
+            if (shotTime >= 0.1f)
             {
+                shotTime = 0;
                 RightBullet();
                 LeftBullet();
 
