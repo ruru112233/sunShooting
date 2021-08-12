@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
                 if(overHeartTime <= 0.2f)
                   AudioManager.instance.StopSe();
             }
-            MeteoPosCheck();
+            //MeteoPosCheck();
         }
         else
         {
@@ -187,7 +187,9 @@ public class Player : MonoBehaviour
     void StartPosition()
     {
         // 太陽との間隔を測定
-        float distance = Vector3.Distance(sunObj.transform.position, this.transform.position);
+        float distance = Vector3.SqrMagnitude(sunObj.transform.position - this.transform.position);
+
+        Debug.Log(distance);
 
         if (distance > outField)
         {
@@ -352,12 +354,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    
-
-    private void OnTriggerEnter(Collider other)
-    {
-        
-    }
 
     // ゲームオーバーの処理
     private async void GameOver()

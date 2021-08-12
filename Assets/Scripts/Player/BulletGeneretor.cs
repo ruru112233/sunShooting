@@ -10,8 +10,6 @@ public class BulletGeneretor : MonoBehaviour
     [SerializeField]
     private ShotPosition shotPosition = null;
 
-    
-
     private float speed = 100f;
 
     Player player = null;

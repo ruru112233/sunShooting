@@ -92,13 +92,14 @@ GameObject:
   - component: {fileID: 7349546421627518113}
   - component: {fileID: 7349546421627518114}
   - component: {fileID: 137763526698859332}
+  - component: {fileID: 5809768235199821378}
   m_Layer: 0
   m_Name: shou_meteor_2
   m_TagString: Meteorite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7349546421627518113
 Transform:
   m_ObjectHideFlags: 0
@@ -141,3 +142,19 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &5809768235199821378
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7349546421627518112}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 600, y: 600, z: 600}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

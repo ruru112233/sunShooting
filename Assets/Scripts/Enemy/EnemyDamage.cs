@@ -14,11 +14,16 @@ public class EnemyDamage : MonoBehaviour
 
     Enemy_01 enemy_01;
 
+    Player player;
+    BoxCollider boxCol;
+
     // Start is called before the first frame update
     void Start()
     {
         enemy_01 = this.enemy.GetComponent<Enemy_01>();
         delEffect.SetActive(false);
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        boxCol = transform.GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
@@ -29,9 +34,8 @@ public class EnemyDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Bullet")
+        if (other.gameObject.CompareTag("Bullet"))
         {
-            Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
             enemy_01.EnemyHp -= player.At;
 
             if (enemy_01.EnemyHp <= 0)
@@ -45,11 +49,12 @@ public class EnemyDamage : MonoBehaviour
     public async void EnemyLost()
     {
         Debug.Log("Œ‚’Ä");
-        transform.GetComponent<BoxCollider>().enabled = false;
+        boxCol.enabled = false;
         delEffect.SetActive(true);
         await Task.Delay(1500);
         ItemDrop();
-        transform.GetComponent<BoxCollider>().enabled = true;
+        boxCol.enabled = true;
+        delEffect.SetActive(false);
         enemy.SetActive(false);
     }
 
