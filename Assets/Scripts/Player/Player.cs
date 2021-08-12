@@ -177,7 +177,7 @@ public class Player : MonoBehaviour
         //WSキー、↑↓キーで上下の方向を替える
         float y = Input.GetAxisRaw("Vertical") * Time.deltaTime * angleSpeed;
         //transform.Rotate(Vector3.right * -y);
-        transform.Rotate(Vector3.forward * -y);
+        transform.Rotate(Vector3.forward * y);
         //ADキー、←→キーで方向を替える
         float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * angleSpeed;
         transform.Rotate(Vector3.up * x);

@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
     }
 
     GameObject player = null;
+    GameObject sunObj;
+
 
     [SerializeField]
     private GameObject enemyBulletPool = null;
@@ -34,12 +36,15 @@ public class Enemy : MonoBehaviour
 
     private float speed = 100f;
 
+    private float stopTime = 0;
+
     Rigidbody rb;
 
     // Start is called before the first frame update
     public virtual void Start()
     {
         player = GameObject.FindWithTag("Player");
+        sunObj = GameObject.FindWithTag("SunObj");
 
         rb = GetComponent<Rigidbody>();
     }
@@ -50,11 +55,14 @@ public class Enemy : MonoBehaviour
         // プレイヤーとの間隔を測定
         float distance = Vector3.Distance(player.transform.position, this.transform.position);
 
-        TargetPlayr();
-        EnemyMove(distance);
-        Shoot(distance);
-        MeteoAvoidance();
-
+        if (EnemyHp > 0)
+        {
+            TargetPlayr();
+            EnemyMove(distance);
+            Shoot(distance);
+            MeteoAvoidance();
+        }
+        
     }
 
     // プレイヤーの方向を向く
@@ -74,7 +82,25 @@ public class Enemy : MonoBehaviour
     {
         float speed = 1.5f;
 
-        if (distance >= 18f)
+        Debug.Log(distance);
+
+        if (distance >= 250)
+        {
+            transform.RotateAround(sunObj.transform.position, Vector3.up, speed * Time.deltaTime);
+        }
+        else if (distance >= 60)
+        {
+            rb.AddForce(transform.forward * speed);
+
+            stopTime += Time.deltaTime;
+
+            if (stopTime >= 2.0f)
+            {
+                stopTime = 0;
+                rb.velocity = Vector3.zero;
+            }
+        }
+        else if (distance >= 18f)
         {
             rb.AddForce(transform.forward * speed);
         }
