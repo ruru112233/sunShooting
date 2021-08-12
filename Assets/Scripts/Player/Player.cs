@@ -189,8 +189,6 @@ public class Player : MonoBehaviour
         // 太陽との間隔を測定
         float distance = Vector3.SqrMagnitude(sunObj.transform.position - this.transform.position);
 
-        Debug.Log(distance);
-
         if (distance > outField)
         {
             this.transform.LookAt(sunObj.transform);
@@ -358,9 +356,7 @@ public class Player : MonoBehaviour
     // ゲームオーバーの処理
     private async void GameOver()
     {
-        var parm = new Parm();
-
-        if (parm.hp <= 0)
+        if (Hp <= 0)
         {
             Debug.Log("ゲームオーバー");
             GameManager.instance.gameOverPanel.SetActive(true);
