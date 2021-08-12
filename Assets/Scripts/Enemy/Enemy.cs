@@ -82,8 +82,6 @@ public class Enemy : MonoBehaviour
     {
         float speed = 1.5f;
 
-        Debug.Log(distance);
-
         if (distance >= 250)
         {
             transform.RotateAround(sunObj.transform.position, Vector3.up, speed * Time.deltaTime);
@@ -126,6 +124,7 @@ public class Enemy : MonoBehaviour
                         if (!t.gameObject.activeSelf)
                         {
                             t.SetPositionAndRotation(ShotPos(), Quaternion.identity);
+                            t.GetComponent<EnemyBulletController>().bulletAt = EnemyAt;
                             t.gameObject.SetActive(true);
                             bulletRb = t.GetComponent<Rigidbody>();
                             bulletRb.velocity = Vector3.zero;
@@ -135,6 +134,7 @@ public class Enemy : MonoBehaviour
                     }
 
                     GameObject obj = enemyBulletPool.transform.GetChild(0).gameObject;
+                    obj.GetComponent<EnemyBulletController>().bulletAt = EnemyAt;
                     bulletRb = Instantiate(obj, ShotPos(), Quaternion.identity, enemyBulletPool.transform).GetComponent<Rigidbody>();
                     bulletRb.velocity = Vector3.zero;
                     bulletRb.AddForce(transform.right * speed, ForceMode.Impulse);
