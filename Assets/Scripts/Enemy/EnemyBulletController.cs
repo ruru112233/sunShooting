@@ -23,7 +23,7 @@ public class EnemyBulletController : BulletController
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("É_ÉÅÅ[ÉW");
             hpSlider.value -= bulletAt; 

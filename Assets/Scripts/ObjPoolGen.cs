@@ -10,17 +10,36 @@ public class ObjPoolGen : MonoBehaviour
                      , nomalMeteoPool = null
                      , bigMeteoPool = null
                      , rightDropPool = null
-                     , leftDropPool = null;
+                     , leftDropPool = null
+                     , enemy_01Pool = null
+        ;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SmallMeteo", 0.0f, 5.0f);
-        InvokeRepeating("NomalMeteo", 100.0f, 12.0f);
-        InvokeRepeating("BigMeteo", 200.0f, 22.0f);
-        InvokeRepeating("GetRightDrop", 0.0f, 1.0f);
-        InvokeRepeating("GetLeftDrop", 0.0f, 1.0f);
+        //InvokeRepeating("SmallMeteo", 0.0f, 5.0f);
+        //InvokeRepeating("NomalMeteo", 100.0f, 12.0f);
+        //InvokeRepeating("BigMeteo", 200.0f, 22.0f);
+        //InvokeRepeating("GetRightDrop", 0.0f, 1.0f);
+        //InvokeRepeating("GetLeftDrop", 0.0f, 1.0f);
+
+        for (int i = 0; i < 60; i++)
+        {
+            Invoke("SmallMeteo", 0f);
+        }
+
+        for (int i = 0; i < 30; i++)
+        {
+            Invoke("NomalMeteo", 0f);
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            Invoke("Enmey01Instance", 0f);
+        }
+
+        InvokeRepeating("Enmey01Instance", 5.0f, 2.0f);
     }
 
     // Update is called once per frame
@@ -140,8 +159,27 @@ public class ObjPoolGen : MonoBehaviour
             }
         }
 
-        
-        
+    }
+
+    // ìGã@(01)ÇÃê∂ê¨
+    void Enmey01Instance()
+    {
+        if (!GameManager.instance.gameOverFlag)
+        {
+            foreach (Transform t in enemy_01Pool.transform)
+            {
+                if (!t.gameObject.activeSelf)
+                {
+                    t.SetPositionAndRotation(InstancePoint(), Quaternion.identity);
+                    t.GetComponent<Enemy_01>().EnemyHp = 10;
+                    t.gameObject.SetActive(true);
+                    return;
+                }
+            }
+
+            //GameObject obj = enemy_01Pool.transform.GetChild(0).gameObject;
+            //Instantiate(obj, InstancePoint(), Quaternion.identity, enemy_01Pool.transform);
+        }
     }
 
     // ê∂ê¨à íuÇÃéZèo

@@ -53,14 +53,13 @@ public class Enemy : MonoBehaviour
     public virtual void Update()
     {
         // ÉvÉåÉCÉÑÅ[Ç∆ÇÃä‘äuÇë™íË
-        float distance = Vector3.Distance(player.transform.position, this.transform.position);
+        float distance = Vector3.SqrMagnitude(player.transform.position - this.transform.position);
 
         if (EnemyHp > 0)
         {
             TargetPlayr();
             EnemyMove(distance);
             Shoot(distance);
-            MeteoAvoidance();
         }
         
     }
@@ -82,11 +81,13 @@ public class Enemy : MonoBehaviour
     {
         float speed = 1.5f;
 
-        if (distance >= 250)
+        Debug.Log(distance);
+
+        if (distance >= 3500)
         {
             transform.RotateAround(sunObj.transform.position, Vector3.up, speed * Time.deltaTime);
         }
-        else if (distance >= 60)
+        else if (distance >= 2000)
         {
             rb.AddForce(transform.forward * speed);
 
@@ -98,7 +99,7 @@ public class Enemy : MonoBehaviour
                 rb.velocity = Vector3.zero;
             }
         }
-        else if (distance >= 18f)
+        else if (distance >= 400f)
         {
             rb.AddForce(transform.forward * speed);
         }
@@ -112,9 +113,9 @@ public class Enemy : MonoBehaviour
     // çUåÇ
     void Shoot(float distance)
     {
-        if (distance < 50f)
+        if (distance < 2000f)
         {
-            if (Time.frameCount % 50 == 0)
+            if (Time.frameCount % 60 == 0)
             {
                 if (!GameManager.instance.gameOverFlag)
                 {
@@ -142,12 +143,6 @@ public class Enemy : MonoBehaviour
             }
         }
 
-    }
-
-    // Ë¶êŒÇÃâÒî
-    void MeteoAvoidance()
-    {
-        float distance = Vector3.Distance(SearchScript.FindMeteo(this.transform).transform.position, this.transform.position);
     }
 
     Vector3 ShotPos()
