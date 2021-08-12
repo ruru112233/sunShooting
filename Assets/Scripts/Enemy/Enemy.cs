@@ -102,27 +102,6 @@ public class Enemy : MonoBehaviour
     void MeteoAvoidance()
     {
         float distance = Vector3.Distance(SearchScript.FindMeteo(this.transform).transform.position, this.transform.position);
-
-        Debug.Log(distance);
-
-        //if (distance < 100.0f)
-        //{
-        //    Rigidbody avoidanceRb = GetComponent<Rigidbody>();
-
-
-        //    avoidanceRb.AddForce(transform.up * -1f, ForceMode.Force);
-        //    if (this.transform.position.y < player.transform.position.y)
-        //    {
-        //        Debug.Log("ã‚ÉˆÚ“®");
-        //        //avoidanceRb.AddForce(transform.up * speed, ForceMode.Force);
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("‰º‚ÉˆÚ“®");
-        //        //avoidanceRb.AddForce(transform.up * -speed, ForceMode.Force);
-        //    }
-        //}
-
     }
 
     Vector3 ShotPos()

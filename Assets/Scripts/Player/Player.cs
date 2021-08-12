@@ -8,11 +8,39 @@ using UnityEngine.UI;
 public class Parm
 {
     public int hp = 100;
-    public float boost = 1.0f;
+    public int at = 5;
+    public float maxBoost = 1.0f;
+    public float speed = 250f;
+    
 }
 
 public class Player : MonoBehaviour
 {
+    Parm parm = new Parm();
+
+    public int Hp
+    {
+        get { return parm.hp; }
+        set { parm.hp = value; }
+    }
+
+    public int At
+    {
+        get { return parm.at; }
+        set { parm.at = value; }
+    }
+
+    public float Speed
+    {
+        get { return parm.speed; }
+        set { parm.speed = value; }
+    }
+
+    public float MaxBoost
+    {
+        get { return parm.maxBoost; }
+        set { parm.maxBoost = value; }
+    }
 
     private int dropCount = 1;
 
@@ -27,8 +55,8 @@ public class Player : MonoBehaviour
         get { return dropCount; }
     }
 
-    [SerializeField]
-    private float speed = 0;
+    //[SerializeField]
+    //private float speed = 0;
 
     [SerializeField]
     private float angleSpeed = 0;
@@ -44,13 +72,16 @@ public class Player : MonoBehaviour
     bool overHeat = false;
 
     [SerializeField]
-    private Slider boostSlider;
+    private Slider hpSlider = null
+                 , boostSlider = null;
 
     Vector3 ptForward = new Vector3(0, 0, 0);
     Vector3 ptRight = new Vector3(-0.5f, 0, 0);
     Vector3 ptLeft = new Vector3(0.5f, 0, 0);
+    Vector3 ptUp = new Vector3(0, -0.5f, 0);
+    Vector3 ptDown = new Vector3(0, 0.5f, 0);
 
-    float turningSpeed = 20f;
+    float turningSpeed = 200f;
 
     Rigidbody rb;
 
@@ -61,23 +92,38 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         particle.SetActive(false);
 
+        // プレイヤーのHPをセット
+        
+
        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         if (!GameManager.instance.gameOverFlag)
         {
+            ParmsSet();
+
             StartPosition();
             if (!overHeat)
             {
-                if (Input.GetKeyDown(KeyCode.F) && Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.F) && Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Z))
+                if (Input.GetKeyDown(KeyCode.F) && Input.GetKey(KeyCode.Space) || 
+                    Input.GetKey(KeyCode.F) && Input.GetKeyDown(KeyCode.Space) || 
+                    Input.GetKeyDown(KeyCode.A) || 
+                    Input.GetKeyDown(KeyCode.D) ||
+                    Input.GetKeyDown(KeyCode.W) ||
+                    Input.GetKeyDown(KeyCode.S))
                 {
                     AudioManager.instance.PlaySE(1);
                 }
-                else if (Input.GetKeyUp(KeyCode.F) || Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || Input.GetKeyUp(KeyCode.Z))
+                else if (Input.GetKeyUp(KeyCode.F) || 
+                         Input.GetKeyUp(KeyCode.Space) || 
+                         Input.GetKeyUp(KeyCode.A) || 
+                         Input.GetKeyUp(KeyCode.D) ||
+                         Input.GetKeyUp(KeyCode.W) ||
+                         Input.GetKeyUp(KeyCode.S))
                 {
                     AudioManager.instance.StopSe();
                 }
@@ -103,6 +149,12 @@ public class Player : MonoBehaviour
         }
 
         GameOver();
+    }
+
+    // パラメータのセット
+    void ParmsSet()
+    {
+        boostSlider.maxValue = MaxBoost;
     }
 
     private void FixedUpdate()
@@ -144,7 +196,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.F) && boostSlider.value > 0)
         {
             boostSlider.value -= Time.deltaTime / 4f;
-            moveZ = speed * 2 * Time.deltaTime;
+            moveZ = Speed * 2 * Time.deltaTime;
             particle.GetComponent<ParticleSystemRenderer>().pivot = ptForward;
             particle.SetActive(true);
         }
@@ -152,22 +204,38 @@ public class Player : MonoBehaviour
         {
             ForwardMove();
 
-            if (Input.GetKey(KeyCode.C))
+            if (Input.GetKey(KeyCode.D))
             {
                 TurningRigheMove();
             }
-            else if (Input.GetKey(KeyCode.Z))
+            else if (Input.GetKey(KeyCode.A))
             {
                 TurningLeftMove();
             }
+            else if (Input.GetKey(KeyCode.W))
+            {
+                TurningUpMove();
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                TurningDownMove();
+            }
         }
-        else if(Input.GetKey(KeyCode.C))
+        else if (Input.GetKey(KeyCode.D))
         {
             TurningRigheMove();
         }
-        else if (Input.GetKey(KeyCode.Z))
+        else if (Input.GetKey(KeyCode.A))
         {
             TurningLeftMove();
+        }
+        else if (Input.GetKey(KeyCode.W))
+        {
+            TurningUpMove();
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            TurningDownMove();
         }
         else
         {
@@ -180,7 +248,7 @@ public class Player : MonoBehaviour
     // 前進
     void ForwardMove()
     {
-        moveZ = speed * Time.deltaTime;
+        moveZ = Speed * Time.deltaTime;
         boostSlider.value += Time.deltaTime / 5;
         particle.GetComponent<ParticleSystemRenderer>().pivot = ptForward;
         particle.SetActive(true);
@@ -190,7 +258,9 @@ public class Player : MonoBehaviour
     // 右旋回
     void TurningRigheMove()
     {
-        rb.AddForce(transform.forward * -turningSpeed, ForceMode.Impulse);
+        rb.AddForce(transform.forward * -turningSpeed, ForceMode.Force);
+        rb.AddForce(transform.right * turningSpeed * 3, ForceMode.Force);
+        transform.Rotate(Vector3.up * 1);
         boostSlider.value -= Time.deltaTime / 4f;
         particle.GetComponent<ParticleSystemRenderer>().pivot = ptRight;
         particle.SetActive(true);
@@ -199,11 +269,35 @@ public class Player : MonoBehaviour
     // 左旋回
     void TurningLeftMove()
     {
-        rb.AddForce(transform.forward * turningSpeed, ForceMode.Impulse);
+        rb.AddForce(transform.forward * turningSpeed, ForceMode.Force);
+        rb.AddForce(transform.right * turningSpeed * 3, ForceMode.Force);
+        transform.Rotate(Vector3.up * -1);
         boostSlider.value -= Time.deltaTime / 4f;
         particle.GetComponent<ParticleSystemRenderer>().pivot = ptLeft;
         particle.SetActive(true);
         
+    }
+
+    // 上旋回
+    void TurningUpMove()
+    {
+        rb.AddForce(transform.up * turningSpeed, ForceMode.Force);
+        rb.AddForce(transform.right * turningSpeed * 3, ForceMode.Force);
+        transform.Rotate(Vector3.forward * 1);
+        boostSlider.value -= Time.deltaTime / 4f;
+        particle.GetComponent<ParticleSystemRenderer>().pivot = ptUp;
+        particle.SetActive(true);
+    }
+
+    // 下旋回
+    void TurningDownMove()
+    {
+        rb.AddForce(transform.up * -turningSpeed, ForceMode.Force);
+        rb.AddForce(transform.right * turningSpeed * 3, ForceMode.Force);
+        transform.Rotate(Vector3.forward * -1);
+        boostSlider.value -= Time.deltaTime / 4f;
+        particle.GetComponent<ParticleSystemRenderer>().pivot = ptDown;
+        particle.SetActive(true);
     }
 
     // バーストを全て使い切ると、一時的に動けないようになる
@@ -250,16 +344,6 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "WaterDrop")
-        {
-            transform.localScale = new Vector3(transform.localScale.y, transform.localScale.y, transform.localScale.z);
-            transform.localScale += new Vector3(0.3f, 0.3f, 0.3f);
-            dropCount++;
-            speed += 1.0f;
-            angleSpeed += 0.3f;
-            AudioManager.instance.PlaySE(0);
-        }
-
         
     }
 
