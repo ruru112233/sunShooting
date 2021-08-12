@@ -348,7 +348,6 @@ public class Player : MonoBehaviour
     // 隕石とプレイヤーの位置から、プレイヤーの近くに隕石があるか判定
     void MeteoPosCheck()
     {
-        
         if (SearchScript.FindMeteo(this.transform) != null)
         {
             float distance = Vector3.Distance(SearchScript.FindMeteo(this.transform).transform.position, this.transform.position);
