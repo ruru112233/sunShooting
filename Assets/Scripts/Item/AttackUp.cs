@@ -22,5 +22,6 @@ public class AttackUp : Item
         base.OnTriggerEnter(other);
 
         player.At += 5;
+        player.BulletScale = new Vector3(player.BulletScale.x + 0.2f, player.BulletScale.y + 0.2f, player.BulletScale.z + 0.2f);
     }
 }
