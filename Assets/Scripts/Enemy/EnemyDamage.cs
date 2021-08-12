@@ -6,7 +6,8 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
     [SerializeField]
-    private GameObject enemy = null;
+    private GameObject enemy = null
+                     , delEffect = null;
 
     [SerializeField]
     private ItemList itemList = null;
@@ -17,6 +18,7 @@ public class EnemyDamage : MonoBehaviour
     void Start()
     {
         enemy_01 = this.enemy.GetComponent<Enemy_01>();
+        delEffect.SetActive(false);
     }
 
     // Update is called once per frame
@@ -43,9 +45,31 @@ public class EnemyDamage : MonoBehaviour
     public async void EnemyLost()
     {
         Debug.Log("撃墜");
-        
-
-        await Task.Delay(1);
+        transform.GetComponent<BoxCollider>().enabled = false;
+        delEffect.SetActive(true);
+        await Task.Delay(1500);
+        ItemDrop();
+        transform.GetComponent<BoxCollider>().enabled = true;
         enemy.SetActive(false);
+    }
+
+    // アイテムドロップの抽選
+    void ItemDrop()
+    {
+        int itemDrop = Random.Range(0, 20);
+        Debug.Log(itemDrop);
+        if (itemDrop >= 12)
+        {
+            Debug.Log("アイテムドロップ");
+            Instantiate(SelectItem(), new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+        }
+    }
+
+    // 落とすアイテムの選定
+    GameObject SelectItem()
+    {
+        int randItemNo = Random.Range(0, itemList.itemList.Count);
+
+        return itemList.itemList[randItemNo];
     }
 }
