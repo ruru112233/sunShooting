@@ -32,10 +32,7 @@ public class BulletGeneretor : MonoBehaviour
                 RightBullet();
                 LeftBullet();
 
-                if (player.WpnPlus)
-                {
-                    CenterBullet();
-                }
+                if (player.WpnPlus) CenterBullet();
             }
         }
     }
@@ -52,6 +49,7 @@ public class BulletGeneretor : MonoBehaviour
                 if (!t.gameObject.activeSelf)
                 {
                     t.SetPositionAndRotation(RightPos(), Quaternion.identity);
+                    t.localScale = player.BulletScale;
                     t.gameObject.SetActive(true);
                     rb = t.GetComponent<Rigidbody>();
                     rb.velocity = Vector3.zero;
@@ -78,6 +76,7 @@ public class BulletGeneretor : MonoBehaviour
                 if (!t.gameObject.activeSelf)
                 {
                     t.SetPositionAndRotation(LeftPos(), Quaternion.identity);
+                    t.localScale = player.BulletScale;
                     t.gameObject.SetActive(true);
                     rb = t.GetComponent<Rigidbody>();
                     rb.velocity = Vector3.zero;
@@ -104,6 +103,7 @@ public class BulletGeneretor : MonoBehaviour
                 if (!t.gameObject.activeSelf)
                 {
                     t.SetPositionAndRotation(CenterPos(), Quaternion.identity);
+                    t.localScale = player.BulletScale;
                     t.gameObject.SetActive(true);
                     rb = t.GetComponent<Rigidbody>();
                     rb.velocity = Vector3.zero;

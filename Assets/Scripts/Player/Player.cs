@@ -12,6 +12,7 @@ public class Parm
     public float maxBoost = 1.0f;
     public float speed = 250f;
     public bool wpnPlus = false;
+    public Vector3 bulletScale = new Vector3( 0.2f, 0.2f, 0.2f);
     
 }
 
@@ -47,6 +48,12 @@ public class Player : MonoBehaviour
     {
         get { return parm.wpnPlus; }
         set { parm.wpnPlus = value; }
+    }
+
+    public Vector3 BulletScale 
+    {
+        get { return parm.bulletScale; }
+        set { parm.bulletScale = value; }
     }
 
     private int dropCount = 1;
