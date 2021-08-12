@@ -29,6 +29,8 @@ public class EnemyBulletController : BulletController
         {
             Debug.Log("É_ÉÅÅ[ÉW");
             hpSlider.value -= bulletAt;
+
+            AudioManager.instance.PlaySE(6);
             
             gameObject.SetActive(false);
         }

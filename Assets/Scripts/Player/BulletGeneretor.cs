@@ -31,6 +31,8 @@ public class BulletGeneretor : MonoBehaviour
                 LeftBullet();
 
                 if (player.WpnPlus) CenterBullet();
+
+                AudioManager.instance.PlaySE(5);
             }
         }
     }

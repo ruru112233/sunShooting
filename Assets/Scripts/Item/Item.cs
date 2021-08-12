@@ -22,6 +22,7 @@ public class Item : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            AudioManager.instance.PlaySE(0);
             gameObject.SetActive(false);
         }
     }
