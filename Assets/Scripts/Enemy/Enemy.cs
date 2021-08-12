@@ -2,8 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class EnemyParm
+{
+    public int hp = 0;
+    public int at = 0;
+}
+
 public class Enemy : MonoBehaviour
 {
+    EnemyParm enemyParm = new EnemyParm();
+
+    public int EnemyHp
+    {
+        get { return enemyParm.hp; }
+        set { enemyParm.hp = value; }
+    }
+
+    public int EnemyAt
+    {
+        get { return enemyParm.at; }
+        set { enemyParm.at = value; }
+    }
+
     GameObject player = null;
 
     [SerializeField]
@@ -17,7 +37,7 @@ public class Enemy : MonoBehaviour
     Rigidbody rb;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         player = GameObject.FindWithTag("Player");
 
@@ -25,7 +45,7 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         // ƒvƒŒƒCƒ„[‚Æ‚ÌŠÔŠu‚ğ‘ª’è
         float distance = Vector3.Distance(player.transform.position, this.transform.position);

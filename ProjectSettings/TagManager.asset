@@ -10,6 +10,8 @@ TagManager:
   - TimeController
   - Bullet
   - EnemyBullet
+  - HpSlider
+  - BoostSlider
   layers:
   - Default
   - TransparentFX

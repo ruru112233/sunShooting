@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HpRecavale : Item
 {
-
+    Slider hpSlider = null;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        hpSlider = GameObject.FindWithTag("HpSlider").GetComponent<Slider>();
     }
 
     // Update is called once per frame
@@ -21,6 +23,6 @@ public class HpRecavale : Item
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-
+        hpSlider.value += 50;
     }
 }
