@@ -13,7 +13,9 @@ public static class CalcScript
 
         int endTime = (int)timeController.CurTime;
 
-        int score = player.DropCount * endTime;
+        Debug.Log("撃墜数： " + player.GekituiCount + " ポイント： " + player.Point + " 経過時間： " + endTime);
+
+        int score = player.Point * endTime * player.GekituiCount;
 
         return score;
     }

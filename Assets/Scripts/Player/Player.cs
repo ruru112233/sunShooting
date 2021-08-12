@@ -13,6 +13,8 @@ public class Parm
     public float speed = 250f;
     public bool wpnPlus = false;
     public Vector3 bulletScale = new Vector3(0.2f, 0.2f, 0.2f);
+    public int point = 0;
+    public int gekituiCount = 0;
 }
 
 public class Player : MonoBehaviour
@@ -53,6 +55,18 @@ public class Player : MonoBehaviour
     {
         get { return parm.bulletScale; }
         set { parm.bulletScale = value; }
+    }
+
+    public int Point
+    {
+        get { return parm.point; }
+        set { parm.point = value; }
+    }
+
+    public int GekituiCount
+    {
+        get { return parm.gekituiCount; }
+        set { parm.gekituiCount = value; }
     }
 
     private int dropCount = 1;
@@ -356,13 +370,16 @@ public class Player : MonoBehaviour
     // ゲームオーバーの処理
     private async void GameOver()
     {
-        if (Hp <= 0)
+        if (hpSlider.value <= 0)
         {
+            hpSlider.value = 0.01f;
+
             Debug.Log("ゲームオーバー");
             GameManager.instance.gameOverPanel.SetActive(true);
 
             AudioManager.instance.PlaySE(3);
             GameManager.instance.gameOverFlag = true;
+
             int score = CalcScript.ScoreCalc();
             naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score);
 
