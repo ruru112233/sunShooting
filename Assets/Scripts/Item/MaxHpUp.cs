@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class MaxHpUp : Item
 {
-    Player player;
+
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        base.Start();
     }
 
     // Update is called once per frame

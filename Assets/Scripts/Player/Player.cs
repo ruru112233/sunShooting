@@ -11,6 +11,7 @@ public class Parm
     public int at = 5;
     public float maxBoost = 1.0f;
     public float speed = 250f;
+    public bool wpnPlus = false;
     
 }
 
@@ -40,6 +41,12 @@ public class Player : MonoBehaviour
     {
         get { return parm.maxBoost; }
         set { parm.maxBoost = value; }
+    }
+
+    public bool WpnPlus
+    {
+        get { return parm.wpnPlus; }
+        set { parm.wpnPlus = value; }
     }
 
     private int dropCount = 1;

@@ -5,9 +5,9 @@ using UnityEngine;
 public class AttackPlas : Item
 {
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame
@@ -19,6 +19,6 @@ public class AttackPlas : Item
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-
+        player.WpnPlus = true;
     }
 }
