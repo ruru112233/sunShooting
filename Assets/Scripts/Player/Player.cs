@@ -12,8 +12,7 @@ public class Parm
     public float maxBoost = 1.0f;
     public float speed = 250f;
     public bool wpnPlus = false;
-    public Vector3 bulletScale = new Vector3( 0.2f, 0.2f, 0.2f);
-    
+    public Vector3 bulletScale = new Vector3(0.2f, 0.2f, 0.2f);
 }
 
 public class Player : MonoBehaviour
@@ -107,15 +106,14 @@ public class Player : MonoBehaviour
         particle.SetActive(false);
 
         // プレイヤーのHPをセット
-        
+        hpSlider.maxValue = Hp;
+        hpSlider.value = Hp;
 
-       
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (!GameManager.instance.gameOverFlag)
         {
             ParmsSet();
