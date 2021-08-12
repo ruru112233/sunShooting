@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour
     private float stopTime = 0;
 
     Rigidbody rb;
+    Rigidbody bulletRb;
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -47,6 +48,7 @@ public class Enemy : MonoBehaviour
         sunObj = GameObject.FindWithTag("SunObj");
 
         rb = GetComponent<Rigidbody>();
+        bulletRb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -81,13 +83,11 @@ public class Enemy : MonoBehaviour
     {
         float speed = 1.5f;
 
-        Debug.Log(distance);
-
-        if (distance >= 3500)
+        if (distance >= 8500)
         {
             transform.RotateAround(sunObj.transform.position, Vector3.up, speed * Time.deltaTime);
         }
-        else if (distance >= 2000)
+        else if (distance >= 4000)
         {
             rb.AddForce(transform.forward * speed);
 
@@ -113,13 +113,12 @@ public class Enemy : MonoBehaviour
     // çUåÇ
     void Shoot(float distance)
     {
-        if (distance < 2000f)
+        if (distance < 3000f)
         {
             if (Time.frameCount % 60 == 0)
             {
                 if (!GameManager.instance.gameOverFlag)
                 {
-                    Rigidbody bulletRb = new Rigidbody();
                     foreach (Transform t in enemyBulletPool.transform)
                     {
                         if (!t.gameObject.activeSelf)
