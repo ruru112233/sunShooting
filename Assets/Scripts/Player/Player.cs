@@ -88,6 +88,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float angleSpeed = 0;
 
+    float angleX;
+    float angleY;
+
     private GameObject sunObj;
 
     [SerializeField]
@@ -109,6 +112,7 @@ public class Player : MonoBehaviour
     Vector3 ptDown = new Vector3(0, 0.5f, 0);
 
     float turningSpeed = 200f;
+    
 
     Rigidbody rb;
 
@@ -130,8 +134,6 @@ public class Player : MonoBehaviour
     {
         if (!GameManager.instance.gameOverFlag)
         {
-            ParmsSet();
-
             StartPosition();
             if (!overHeat)
             {
@@ -155,6 +157,7 @@ public class Player : MonoBehaviour
                 }
 
                 Move();
+
                 //TurningMove();
             }
             else
@@ -177,24 +180,20 @@ public class Player : MonoBehaviour
         GameOver();
     }
 
-    // パラメータのセット
-    void ParmsSet()
-    {
-        boostSlider.maxValue = MaxBoost;
-    }
-
     private void FixedUpdate()
     {
-
         rb.velocity = transform.right * moveZ;
 
-        //WSキー、↑↓キーで上下の方向を替える
-        float y = Input.GetAxisRaw("Vertical") * Time.deltaTime * angleSpeed;
-        //transform.Rotate(Vector3.right * -y);
-        transform.Rotate(Vector3.forward * y);
-        //ADキー、←→キーで方向を替える
-        float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * angleSpeed;
-        transform.Rotate(Vector3.up * x);
+        if (!GameManager.instance.gameOverFlag || !overHeat)
+        {
+            angleY = Input.GetAxisRaw("Vertical") * Time.deltaTime * angleSpeed;
+            angleX = Input.GetAxisRaw("Horizontal") * Time.deltaTime * angleSpeed;
+
+            //WSキー、↑↓キーで上下の方向を替える
+            transform.Rotate(Vector3.forward * angleY);
+            //ADキー、←→キーで方向を替える
+            transform.Rotate(Vector3.up * angleX);
+        }
     }
 
     // 太陽から離れすぎたら、初期位置に戻す
