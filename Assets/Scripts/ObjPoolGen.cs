@@ -34,12 +34,12 @@ public class ObjPoolGen : MonoBehaviour
             Invoke("NomalMeteo", 0f);
         }
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 20; i++)
         {
             Invoke("Enmey01Instance", 0f);
         }
 
-        InvokeRepeating("Enmey01Instance", 5.0f, 2.0f);
+        InvokeRepeating("Enmey01Instance", 30.0f, 3.0f);
     }
 
     // Update is called once per frame
