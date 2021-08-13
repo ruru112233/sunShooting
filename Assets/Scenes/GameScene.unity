@@ -32467,9 +32467,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smallMeteoPool: {fileID: 1190113000}
   nomalMeteoPool: {fileID: 865263657}
-  bigMeteoPool: {fileID: 0}
-  rightDropPool: {fileID: 0}
-  leftDropPool: {fileID: 0}
   enemy_01Pool: {fileID: 2095011545}
 --- !u!4 &1287218992
 Transform:
@@ -51203,7 +51200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particle: {fileID: 1713455703535903}
   spaceShuttle: {fileID: 1730990436124831}
-  angleSpeed: 40
+  angleSpeed: 10
   inField: 0
   outField: 500000
   hpSlider: {fileID: 499595709}
@@ -71127,10 +71124,6 @@ PrefabInstance:
     - target: {fileID: 7079131230233439158, guid: b31dc1039d3a3cb49b6857167f571b26, type: 3}
       propertyPath: m_Name
       value: 01_Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079131230233439158, guid: b31dc1039d3a3cb49b6857167f571b26, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7599244878140174604, guid: b31dc1039d3a3cb49b6857167f571b26, type: 3}
       propertyPath: m_RootOrder

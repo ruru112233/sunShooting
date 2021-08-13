@@ -85,11 +85,7 @@ public class Player : MonoBehaviour
     //[SerializeField]
     //private float speed = 0;
 
-    [SerializeField]
-    private float angleSpeed = 0;
-
-    float angleX;
-    float angleY;
+    private float angleSpeed = 10f;
 
     private GameObject sunObj;
 
@@ -141,6 +137,8 @@ public class Player : MonoBehaviour
             StartPosition();
             if (!overHeat)
             {
+                
+
                 if (Input.GetKeyDown(KeyCode.F) && Input.GetKey(KeyCode.Space) || 
                     Input.GetKey(KeyCode.F) && Input.GetKeyDown(KeyCode.Space) || 
                     Input.GetKeyDown(KeyCode.A) || 
@@ -190,8 +188,8 @@ public class Player : MonoBehaviour
 
         if (!GameManager.instance.gameOverFlag && !overHeat)
         {
-            angleY = Input.GetAxisRaw("Vertical") * Time.deltaTime * angleSpeed;
-            angleX = Input.GetAxisRaw("Horizontal") * Time.deltaTime * angleSpeed;
+            float angleY = Input.GetAxisRaw("Vertical") * Time.deltaTime * angleSpeed;
+            float angleX = Input.GetAxisRaw("Horizontal") * Time.deltaTime * angleSpeed;
 
             //WSキー、↑↓キーで上下の方向を替える
             transform.Rotate(Vector3.forward * angleY);
