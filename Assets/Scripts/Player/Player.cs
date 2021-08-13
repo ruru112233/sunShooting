@@ -115,12 +115,16 @@ public class Player : MonoBehaviour
     
 
     Rigidbody rb;
+    Renderer playerRenderer;
+    ParticleSystemRenderer ptSystemRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         sunObj = GameObject.FindWithTag("SunObj");
         rb = GetComponent<Rigidbody>();
+        playerRenderer = spaceShuttle.GetComponent<Renderer>();
+        ptSystemRenderer = particle.GetComponent<ParticleSystemRenderer>();
         particle.SetActive(false);
 
         // プレイヤーのHPをセット
@@ -184,7 +188,7 @@ public class Player : MonoBehaviour
     {
         rb.velocity = transform.right * moveZ;
 
-        if (!GameManager.instance.gameOverFlag || !overHeat)
+        if (!GameManager.instance.gameOverFlag && !overHeat)
         {
             angleY = Input.GetAxisRaw("Vertical") * Time.deltaTime * angleSpeed;
             angleX = Input.GetAxisRaw("Horizontal") * Time.deltaTime * angleSpeed;
@@ -222,7 +226,7 @@ public class Player : MonoBehaviour
         {
             boostSlider.value -= Time.deltaTime / 4f;
             moveZ = Speed * 2 * Time.deltaTime;
-            particle.GetComponent<ParticleSystemRenderer>().pivot = ptForward;
+            ptSystemRenderer.pivot = ptForward;
             particle.SetActive(true);
         }
         else if (Input.GetKey(KeyCode.Space))
@@ -275,7 +279,7 @@ public class Player : MonoBehaviour
     {
         moveZ = Speed * Time.deltaTime;
         boostSlider.value += Time.deltaTime / 5;
-        particle.GetComponent<ParticleSystemRenderer>().pivot = ptForward;
+        ptSystemRenderer.pivot = ptForward;
         particle.SetActive(true);
     }
     
@@ -287,7 +291,7 @@ public class Player : MonoBehaviour
         rb.AddForce(transform.right * turningSpeed * 3, ForceMode.Force);
         transform.Rotate(Vector3.up * 1);
         boostSlider.value -= Time.deltaTime / 4f;
-        particle.GetComponent<ParticleSystemRenderer>().pivot = ptRight;
+        ptSystemRenderer.pivot = ptRight;
         particle.SetActive(true);
     }
 
@@ -298,7 +302,7 @@ public class Player : MonoBehaviour
         rb.AddForce(transform.right * turningSpeed * 3, ForceMode.Force);
         transform.Rotate(Vector3.up * -1);
         boostSlider.value -= Time.deltaTime / 4f;
-        particle.GetComponent<ParticleSystemRenderer>().pivot = ptLeft;
+        ptSystemRenderer.pivot = ptLeft;
         particle.SetActive(true);
         
     }
@@ -310,7 +314,7 @@ public class Player : MonoBehaviour
         rb.AddForce(transform.right * turningSpeed * 3, ForceMode.Force);
         transform.Rotate(Vector3.forward * 1);
         boostSlider.value -= Time.deltaTime / 4f;
-        particle.GetComponent<ParticleSystemRenderer>().pivot = ptUp;
+        ptSystemRenderer.pivot = ptUp;
         particle.SetActive(true);
     }
 
@@ -321,7 +325,7 @@ public class Player : MonoBehaviour
         rb.AddForce(transform.right * turningSpeed * 3, ForceMode.Force);
         transform.Rotate(Vector3.forward * -1);
         boostSlider.value -= Time.deltaTime / 4f;
-        particle.GetComponent<ParticleSystemRenderer>().pivot = ptDown;
+        ptSystemRenderer.pivot = ptDown;
         particle.SetActive(true);
     }
 
@@ -329,7 +333,7 @@ public class Player : MonoBehaviour
     void OverHeart()
     {
         Debug.Log("オーバーヒート");
-        spaceShuttle.GetComponent<Renderer>().material.color = Color.red;
+        playerRenderer.material.color = Color.red;
         transform.localScale = new Vector3(transform.localScale.y, transform.localScale.y, transform.localScale.z);
         moveZ = 0;
         overHeartTime += Time.deltaTime;
@@ -340,30 +344,10 @@ public class Player : MonoBehaviour
             overHeat = false;
             overHeartTime = 0;
             boostSlider.value = 0.01f;
-            spaceShuttle.GetComponent<Renderer>().material.color = Color.white;
+            playerRenderer.material.color = Color.white;
         }
 
     }
-
-    // 隕石とプレイヤーの位置から、プレイヤーの近くに隕石があるか判定
-    void MeteoPosCheck()
-    {
-        if (SearchScript.FindMeteo(this.transform) != null)
-        {
-            float distance = Vector3.Distance(SearchScript.FindMeteo(this.transform).transform.position, this.transform.position);
-
-            if (distance < 150)
-            {
-                Debug.Log("隕石接近中");
-                GameManager.instance.emergencyPanel.SetActive(true);
-            }
-            else
-            {
-                GameManager.instance.emergencyPanel.SetActive(false);
-            }
-        }
-    }
-
 
     // ゲームオーバーの処理
     private void GameOver()
