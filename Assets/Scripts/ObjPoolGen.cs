@@ -8,9 +8,6 @@ public class ObjPoolGen : MonoBehaviour
     [SerializeField]
     private GameObject smallMeteoPool = null
                      , nomalMeteoPool = null
-                     , bigMeteoPool = null
-                     , rightDropPool = null
-                     , leftDropPool = null
                      , enemy_01Pool = null
         ;
 
@@ -18,12 +15,12 @@ public class ObjPoolGen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < 35; i++)
         {
             Invoke("SmallMeteo", 0f);
         }
 
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 25; i++)
         {
             Invoke("NomalMeteo", 0f);
         }
@@ -79,78 +76,6 @@ public class ObjPoolGen : MonoBehaviour
 
             //GameObject obj = nomalMeteoPool.transform.GetChild(0).gameObject;
             //Instantiate(obj, InstancePoint(), Quaternion.identity, nomalMeteoPool.transform);
-        }
-
-    }
-
-    // ‘εθ¦Ξ‚π¶¬
-    void BigMeteo()
-    {
-        if (!GameManager.instance.gameOverFlag)
-        {
-            foreach (Transform t in bigMeteoPool.transform)
-            {
-                if (!t.gameObject.activeSelf)
-                {
-                    t.SetPositionAndRotation(InstancePoint(), Quaternion.identity);
-                    t.gameObject.SetActive(true);
-                    return;
-                }
-            }
-
-            //GameObject obj = bigMeteoPool.transform.GetChild(0).gameObject;
-            //Instantiate(obj, InstancePoint(), Quaternion.identity, bigMeteoPool.transform);
-        }
-
-
-    }
-
-    // ‰E‰ρ“]‚Μ…“H‚π¶¬
-    void GetRightDrop()
-    {
-        if (!GameManager.instance.gameOverFlag)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                foreach (Transform t in rightDropPool.transform)
-                {
-                    if (!t.gameObject.activeSelf)
-                    {
-                        t.SetPositionAndRotation(InstancePoint(), Quaternion.identity);
-                        t.gameObject.SetActive(true);
-                        return;
-                    }
-                }
-
-                //GameObject obj = rightDropPool.transform.GetChild(0).gameObject;
-                //Instantiate(obj, InstancePoint(), Quaternion.identity, rightDropPool.transform);
-            }
-        }
-
-        
-        
-    }
-
-    // ¶‰ρ“]‚Μ…“H‚π¶¬
-    void GetLeftDrop()
-    {
-        if (!GameManager.instance.gameOverFlag)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                foreach (Transform t in leftDropPool.transform)
-                {
-                    if (!t.gameObject.activeSelf)
-                    {
-                        t.SetPositionAndRotation(InstancePoint(), Quaternion.identity);
-                        t.gameObject.SetActive(true);
-                        return;
-                    }
-                }
-
-                //GameObject obj = leftDropPool.transform.GetChild(0).gameObject;
-                //Instantiate(obj, InstancePoint(), Quaternion.identity, leftDropPool.transform);
-            }
         }
 
     }
