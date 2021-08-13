@@ -2,26 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyParm
-{
-    public int hp = 0;
-    public int at = 0;
-}
-
 public class Enemy : MonoBehaviour
 {
-    EnemyParm enemyParm = new EnemyParm();
+    private int hp = 0;
+    private int at = 0;
 
     public int EnemyHp
     {
-        get { return enemyParm.hp; }
-        set { enemyParm.hp = value; }
+        get { return hp; }
+        set { hp = value; }
     }
 
     public int EnemyAt
     {
-        get { return enemyParm.at; }
-        set { enemyParm.at = value; }
+        get { return at; }
+        set { at = value; }
     }
 
     GameObject player = null;
@@ -48,7 +43,6 @@ public class Enemy : MonoBehaviour
         sunObj = GameObject.FindWithTag("SunObj");
 
         rb = GetComponent<Rigidbody>();
-        bulletRb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
