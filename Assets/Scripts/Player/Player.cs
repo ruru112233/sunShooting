@@ -366,7 +366,7 @@ public class Player : MonoBehaviour
 
 
     // ゲームオーバーの処理
-    private async void GameOver()
+    private void GameOver()
     {
         if (hpSlider.value <= 0)
         {
@@ -381,7 +381,6 @@ public class Player : MonoBehaviour
             int score = CalcScript.ScoreCalc();
             naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score);
 
-            await Task.Delay(500);
         }
 
     }

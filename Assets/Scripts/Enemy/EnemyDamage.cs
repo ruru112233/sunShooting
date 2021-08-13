@@ -40,13 +40,13 @@ public class EnemyDamage : MonoBehaviour
 
             if (enemy_01.EnemyHp <= 0)
             {
-                EnemyLost();
+                StartCoroutine(EnemyLost());
             }
         }
     }
 
     // Œ‚’Ä‚µ‚½Žž‚Ìˆ—
-    public async void EnemyLost()
+    public IEnumerator EnemyLost()
     {
         Debug.Log("Œ‚’Ä");
         boxCol.enabled = false;
@@ -55,7 +55,9 @@ public class EnemyDamage : MonoBehaviour
         player.GekituiCount++;
 
         delEffect.SetActive(true);
-        await Task.Delay(1500);
+
+        yield return new WaitForSeconds(1.5f);
+
         ItemDrop();
         boxCol.enabled = true;
         delEffect.SetActive(false);
